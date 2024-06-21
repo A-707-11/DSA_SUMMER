@@ -14,12 +14,12 @@ typedef struct{
 }QUEUE;
 
 QUEUE initQ();
-
 void display();
-void Enqueue();
-void Dequeue();
-int Front();
-int Rear();
+void visualize();
+void enqueue();
+void dequeue();
+int front();
+int rear();
 bool isEmpty();
 
 #endif

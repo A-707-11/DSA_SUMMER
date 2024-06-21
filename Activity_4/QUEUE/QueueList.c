@@ -9,13 +9,32 @@ QUEUE initQ()
 	QUEUE myQ;
 	myQ.front = NULL;
 	myQ.rear = NULL;
-	printf("Initialazation Successfull\n");
 	return myQ;
 }
 
-void display(QUEUE myQ)
+void display(QUEUE *myQ)
+{
+	QUEUE tempQ = initQ();
+ 	printf("\nDISPLAY: \n");
+	while(!isEmpty(myQ))
+	{
+		printf("%d ", front(*myQ));
+		enqueue(&tempQ,front(*myQ));
+		dequeue(myQ);
+	}
+
+	while(!isEmpty(tempQ))
+	{
+		enqueue(myQ,front(tempQ));
+		dequeue(&tempQ);
+	}
+	
+}
+
+void visualize(QUEUE myQ)
 {
 	NODE* trav;
+	printf("\n\nVISUALIZE: \n");
 	for(trav = myQ.front; trav != NULL; trav = trav->next)
 	{
 		printf("%d", trav->data);
@@ -26,16 +45,17 @@ void display(QUEUE myQ)
 	}
 }
 
-void Enqueue(QUEUE *myQ, int data)
+void enqueue(QUEUE *myQ, int data)
 {
 	NodePtr temp = malloc(sizeof(NODE));
 	
 	if(temp != NULL)
 	{
 		temp->data = data;
+		temp->next = NULL;
 	}
 	
-	if(isEmpty(myQ))
+	if(isEmpty(*myQ))
 	{
 		temp->next = myQ->front;
 		myQ->front = temp;
@@ -44,40 +64,39 @@ void Enqueue(QUEUE *myQ, int data)
 	else
 	{
 		myQ->rear->next = temp;
-		temp->next = NULL;
 		myQ->rear = temp;
 	}
 }
-void Dequeue(QUEUE *myQ)
+
+void dequeue(QUEUE *myQ)
 {
 	NODE *temp;
 	
-	if(!isEmpty(myQ))
+	if(!isEmpty(*myQ))
 	{
 		temp = myQ->front;
 		myQ->front = myQ->front->next;
 		if(myQ->front == NULL)
 		{
-			myQ->rear == NULL;
+			myQ->rear = NULL;
 		}
 		free(temp);
 	}
 	
 }
 
-int Front(QUEUE myQ)
+int front(QUEUE myQ)
 {
-	
 	return (!isEmpty(myQ)) ?  myQ.front->data : -1;
 }
 
-int Rear(QUEUE myQ)
+int rear(QUEUE myQ)
 {
 	return (!isEmpty(myQ))? myQ.rear->data : -1;
 }
 
 bool isEmpty(QUEUE myQ)
 {
-	return (myQ.front == NULL && myQ.rear == NULL);
+	return (myQ.front == NULL && myQ.rear == NULL)? true:false;
 	
 }

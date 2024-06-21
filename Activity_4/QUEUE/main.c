@@ -9,19 +9,25 @@ int main(int argc, char *argv[]) {
 	QUEUE myQueue = initQ();
 	
 	printf("\nENQUEUE\n");
-	Enqueue(&myQueue,10);
-	Enqueue(&myQueue,44);
-	Enqueue(&myQueue,33);
-	Enqueue(&myQueue,22);
+	enqueue(&myQueue,10);
+	enqueue(&myQueue,44);
+	enqueue(&myQueue,33);
+	enqueue(&myQueue,22);
 	
-	display(myQueue);
+	display(&myQueue);
+	visualize(myQueue);
 	
-	printf("\nDEQUEUE\n");
-	Dequeue(&myQueue);
-	display(myQueue);
+	printf("\n\nFRONT: %d\n", front(myQueue));
+	printf("REAR: %d\n", rear(myQueue));
 	
-	printf("\n\nFRONT: %d\n", Front(myQueue));
-	printf("REAR: %d\n", Rear(myQueue));
+	printf("\n\nAFTER DEQUEUE: \n");
+	dequeue(&myQueue);
+
+	display(&myQueue);
+	visualize(myQueue);
+	
+	printf("\n\nFRONT: %d\n", front(myQueue));
+	printf("REAR: %d\n", rear(myQueue));
 	
 	return 0;
 }
