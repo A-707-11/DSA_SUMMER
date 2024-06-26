@@ -45,7 +45,7 @@ void display(processArray A)
 {
 	int i; 
 	float aveWT = 0, aveTT = 0;
-	printf("\n\n-------------------------------------------\n\n");
+	
 	printf("%s %3s %3s %3s %3s %3s\n", "Process", "AT", "BT", "ET", "WT", "TT");
 	for(i=0;i<A.count;i++)
 	{
@@ -55,6 +55,7 @@ void display(processArray A)
 	}
 	printf("\nAverage WT: %.2f\n", aveWT/A.count);
 	printf("Average TT: %.2f\n", aveTT/A.count);
+	printf("\n\n-------------------------------------------\n\n");
 }
 
 bool isEmpty(QUEUE A)
@@ -162,6 +163,7 @@ void fcfs_scheduling(QUEUE *A, processArray *B)
             }
         }
     }
+    printf("PROCESSING COMPLETE! \n\n");
 }
 
 
