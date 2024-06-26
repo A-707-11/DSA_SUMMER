@@ -8,20 +8,23 @@ processArray initProcess()
 	int i, prcs;
 	
 	printf("\n\nEnter the number of Process: ");
-	scanf("%d", prcs);
+	scanf("%d", &prcs);
+	fflush(stdin);
 	
 	for(i=0;i<prcs;i++)
 	{
-		A.data[i].et = -1;
-		A.data[i].tt = -1;
-		A.data[i].wt = -1;
+		A.data[i].et = 0;
+		A.data[i].tt = 0;
+		A.data[i].wt = 0;
 			
-		printf("Enter Process ID", A.data[i].processID);
+		printf("Enter Process ID: ", A.data[i].processID);
 		scanf("%c", &A.data[i].processID);
-		printf("Enter Arrival Time", A.data[i].at);
+		printf("Enter Arrival Time: ", A.data[i].at);
 		scanf("%d", &A.data[i].at);
-		printf("Enter Burst Time", A.data[i].bt);
+		printf("Enter Burst Time: ", A.data[i].bt);
 		scanf("%d", &A.data[i].bt);
+		fflush(stdin);
+		printf("\n");
 		A.count++;
 	}
 
@@ -38,9 +41,30 @@ QUEUE initQ()
 	return A;
 }
 
+void display(processArray A)
+{
+	int i;
+	printf("\n\n-------------------------------------------\n\n");
+	printf("%s %3s %3s %3s %3s %3s\n", "Process", "AT", "BT", "ET", "WT", "TT");
+	for(i=0;i<A.count;i++)
+	{
+		printf("%4c %5d %3d %3d %3d %3d\n", A.data[i].processID, A.data[i].at, A.data[i].bt, A.data[i].et, A.data[i].wt, A.data[i].tt);
+	}
+}
+
 bool isEmpty(QUEUE A)
 {
 	return (A.front == NULL && A.rear == NULL);
+}
+
+processData front(QUEUE A)
+{
+	return A.front->data;
+}
+
+processData rear(QUEUE A)
+{
+	return A.rear->data;
 }
 
 void fcfs_enqueue(QUEUE *A, processData B)
@@ -82,27 +106,57 @@ void fcfs_dequeue(QUEUE *A)
 	}
 }
 
-void fcfs_scheduling(QUEUE *A, processArray *B)
+void fcfs_scheduling(QUEUE *A, processArray *B) 
 {
-	int i, j;
-	processData temp;
-	
-	for(i=0;i<MAX;i++)
+    
+    int i, j;
+    int currentTime = 0;
+    processData currentProcess;
+    
+    for (i = 0; i < B->count - 1; i++) 
 	{
-		for(j=i+1;j<MAX-1;j++)
+        for (j = i + 1; j < B->count; j++) 
 		{
-			if(B->data[j].at > B->data[j + 1].at)
+            if (B->data[i].at > B->data[j].at) 
 			{
-				temp = B->data[i];
-				B->data[i] = B->data[j];
-				B->data[j] = temp;	
-			}
-		}
-	}
-	
-	
-	
-	
+                processData temp = B->data[i];
+                B->data[i] = B->data[j];
+                B->data[j] = temp;
+            }
+        }
+    }
+    
+    for (i = 0; i < B->count; i++) 
+	{
+        fcfs_enqueue(A, B->data[i]);
+    }
+
+    while (!isEmpty(*A)) 
+	{
+    	currentProcess = front(*A);
+        fcfs_dequeue(A);
+
+        if (currentTime < currentProcess.at) 
+		{
+            currentTime = currentProcess.at;
+        }
+
+        currentProcess.et = currentTime + currentProcess.bt;
+        currentProcess.wt = currentTime - currentProcess.at;
+        currentProcess.tt = currentProcess.et - currentProcess.at;
+
+        currentTime += currentProcess.bt;
+
+        
+        for (i = 0; i < B->count; i++) 
+		{
+            if (B->data[i].processID == currentProcess.processID) 
+			{
+                B->data[i] = currentProcess;
+                break;
+            }
+        }
+    }
 }
 
 

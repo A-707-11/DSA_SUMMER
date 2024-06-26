@@ -29,14 +29,15 @@ typedef struct{
 	prcsPtrNode rear;
 }QUEUE;
 
-processArray getProcess();
+processArray initProcess();
 QUEUE initQ();
+void display();
 bool isEmpty();
+processData front();
+processData rear();
 void fcfs_enqueue();
 void fcfs_dequeue();
 void fcfs_scheduling();
-
-
 
 
 #endif
