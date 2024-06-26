@@ -43,13 +43,18 @@ QUEUE initQ()
 
 void display(processArray A)
 {
-	int i;
+	int i; 
+	float aveWT = 0, aveTT = 0;
 	printf("\n\n-------------------------------------------\n\n");
 	printf("%s %3s %3s %3s %3s %3s\n", "Process", "AT", "BT", "ET", "WT", "TT");
 	for(i=0;i<A.count;i++)
 	{
+		aveWT += A.data[i].wt;
+		aveTT += A.data[i].tt;
 		printf("%4c %5d %3d %3d %3d %3d\n", A.data[i].processID, A.data[i].at, A.data[i].bt, A.data[i].et, A.data[i].wt, A.data[i].tt);
 	}
+	printf("\nAverage WT: %.2f\n", aveWT/A.count);
+	printf("Average TT: %.2f\n", aveTT/A.count);
 }
 
 bool isEmpty(QUEUE A)
