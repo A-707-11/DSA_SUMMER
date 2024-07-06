@@ -114,7 +114,7 @@ void travBFS(NodeType *head)
     while (!isEmpty(&queue)) 
 	{
         NodeType *current = dequeue(&queue);
-        printf("%s\n", current->item.prodName);
+        printf("%s\t\t%.2f\t%d\t\t%d/%d/%d\n", head->item.prodName, head->item.prodPrice, head->item.prodQty, head->item.expDate.day,head->item.expDate.month,head->item.expDate.year);
         
         if (current->left != NULL) enqueue(&queue, current->left);
         if (current->right != NULL) enqueue(&queue, current->right);
@@ -126,7 +126,7 @@ void prefixDFS(NodeType* head)
 {
     if (head != NULL)
     {
-    	printf("%s\n", head->item.prodName);
+    	printf("%s\t\t%.2f\t%d\t\t%d/%d/%d\n", head->item.prodName, head->item.prodPrice, head->item.prodQty, head->item.expDate.day,head->item.expDate.month,head->item.expDate.year);
     	prefixDFS(head->left);
     	prefixDFS(head->right);	
 	} 
@@ -138,7 +138,7 @@ void postfixDFS(NodeType* head)
     {
     	postfixDFS(head->left);
     	postfixDFS(head->right);
-    	printf("%s\n", head->item.prodName);
+    	printf("%s\t\t%.2f\t%d\t\t%d/%d/%d\n", head->item.prodName, head->item.prodPrice, head->item.prodQty, head->item.expDate.day,head->item.expDate.month,head->item.expDate.year);
 	}
 }
 
@@ -147,7 +147,7 @@ void infixDFS(NodeType* head)
     if (head != NULL)
     {
     	infixDFS(head->left);
-    	printf("%s\n", head->item.prodName);
+    	printf("%s\t\t%.2f\t%d\t\t%d/%d/%d\n", head->item.prodName, head->item.prodPrice, head->item.prodQty, head->item.expDate.day,head->item.expDate.month,head->item.expDate.year);
     	infixDFS(head->right);
 	}
 
